@@ -9,7 +9,7 @@ export default function Home() {
 
   return (
     <div className="home">
-      <h1>TODOs App</h1>
+      <h1>Spent App</h1>
       <div>
         {!isAuthenticated ? (
           <button className="btn-primary" onClick={() => navigate("/login")}>

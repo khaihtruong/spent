@@ -10,7 +10,7 @@ export default function AppLayout() {
   return (
     <div className="app">
       <div className="title">
-        <h1>NEU TODOs App</h1>
+        <h1>Spent App</h1>
       </div>
       <div className="header">
         <nav className="menu">
