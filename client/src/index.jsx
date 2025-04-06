@@ -2,7 +2,7 @@ import React from "react";
 import * as ReactDOMClient from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import AppLayout from "./components/AppLayout";
-import Todos from "./components/Todos";
+import {Todos, Income} from "./components/Todos";
 import TodoDetail from "./components/TodoDetail";
 import Profile from "./components/Profile";
 import Login from "./components/Login";
@@ -32,13 +32,14 @@ root.render(
               <AppLayout />
             </RequireAuth>
           }
-        >
-          <Route index element={<Profile />} />
-          <Route path="todos" element={<Todos />} />
+        > 
+          <Route path="profile" element= {<Profile />}/>
+          <Route path="todos" element={<><Todos /><Income /></>} />
           <Route path="todos/:todoId" element={<TodoDetail />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   </AuthProvider>
+  
 );
