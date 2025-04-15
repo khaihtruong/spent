@@ -67,7 +67,7 @@ export function Todos() {
                 checked={item.completed}
               />
               <span className="itemName">{item.title}</span>
-              <button aria-label={`Remove ${item.title}`} value={item.id}>
+              <button aria-label={`Remove ${item.title}`} value={item.id} onClick={(e) => {console.log('here2')}}>
                 X
               </button>
             </li>
@@ -142,7 +142,8 @@ export function Income() {
                 checked={item.completed}
               />
               <span className="itemName">{item.title}</span>
-              <button aria-label={`Remove ${item.title}`} value={item.id}>
+              <button aria-label={`Remove ${item.title}`} value={item.id} 
+              onClick={(e) => {console.log('here2')}}>
                 X
               </button>
             </li>

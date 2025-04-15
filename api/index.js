@@ -101,6 +101,42 @@ app.get("/me", requireAuth, async (req, res) => {
   res.json(user);
 });
 
+// api for income
+app.get("/income", requireAuth, async (req, res) => {
+  const userId = req.userId;
+  const income = await prisma.Income.findMany({ where: { userId } });
+  res.json(income);
+});
+
+app.post("/income", requireAuth, async (req, res) => {
+  const userId = req.userId;
+
+  const { title } = req.body;
+
+  if (!title) {
+    res.status(400).send("title is required");
+  } else {
+    const newItem = await prisma.Income.create({
+      data: {
+        title,
+        userId,
+      },
+    });
+
+    res.status(201).json(newItem);
+  }
+});
+
+app.delete("/income/:id", requireAuth, async (req, res) => {
+  const id = req.params.id;
+  const deletedIncome = await prisma.income.delete({
+    where: {
+      id,
+    },
+  });
+  res.json(deletedIncome);
+});
+
 app.get("/todos", requireAuth, async (req, res) => {
   const userId = req.userId;
   const expense = await prisma.Expense.findMany({ where: { userId } });
