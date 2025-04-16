@@ -39,3 +39,9 @@ export async function fetchPostWithAuth(url, data) {
     body: JSON.stringify(data),
   });
 }
+
+export async function fetchDeleteWithAuth(url) {
+  return fetchWithAuth(url, {
+    method: "DELETE",
+  });
+}

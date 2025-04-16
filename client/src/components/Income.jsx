@@ -10,7 +10,7 @@ export default function Income() {
 
   async function insertTodo(title) {
     const data = await fetchPostWithAuth(
-      `${process.env.REACT_APP_API_URL}/todos`,
+      `${process.env.REACT_APP_API_URL}/income`,
       {
         title: title,
       }
@@ -67,7 +67,8 @@ export default function Income() {
                 checked={item.completed}
               />
               <span className="itemName">{item.title}</span>
-              <button aria-label={`Remove ${item.title}`} value={item.id}>
+              <button aria-label={`Remove ${item.title}`} value={item.id} 
+              onClick={(e) => {console.log('here2')}}>
                 X
               </button>
             </li>

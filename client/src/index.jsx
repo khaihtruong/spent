@@ -2,7 +2,8 @@ import React from "react";
 import * as ReactDOMClient from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import AppLayout from "./components/AppLayout";
-import {Todos, Income} from "./components/Todos";
+import Todos from "./components/Todos";
+import Income from "./components/Income"
 import TodoDetail from "./components/TodoDetail";
 import Profile from "./components/Profile";
 import Login from "./components/Login";

@@ -163,13 +163,27 @@ app.post("/todos", requireAuth, async (req, res) => {
 });
 
 app.delete("/todos/:id", requireAuth, async (req, res) => {
-  const id = req.params.id;
-  const deletedExpense = await prisma.expense.delete({
-    where: {
-      id,
-    },
-  });
-  res.json(deletedExpense);
+  const id = parseInt(req.params.id, 10);
+
+  if (isNaN(id)) {
+    return res.status(400).json({ error: "Invalid ID" });
+  }
+
+  try {
+    const deletedExpense = await prisma.expense.delete({
+      where: { id },
+    });
+
+    res.status(200).json(deletedExpense);
+  } catch (error) {
+    console.error("Error deleting expense:", error);
+
+    if (error.code === "P2025") {
+      return res.status(404).json({ error: "Expense not found" });
+    }
+
+    res.status(500).json({ error: "Internal server error" });
+  }
 });
 
 app.get("/todos/:id", requireAuth, async (req, res) => {
