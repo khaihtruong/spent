@@ -25,7 +25,7 @@ export default function AppLayout() {
               <Link to="/app/todos">New Transaction</Link>
             </li>
             <li>
-              <Link to="/app/todos">All Transactions</Link>
+              <Link to="/app/test">All Transactions</Link>
             </li>
             <li>
               <Link to="/app/exchange">Exchange</Link>
