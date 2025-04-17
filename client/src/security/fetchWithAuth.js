@@ -45,3 +45,13 @@ export async function fetchDeleteWithAuth(url) {
     method: "DELETE",
   });
 }
+
+export async function fetchPutWithAuth(url, data) {
+  return fetchWithAuth(url, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+}

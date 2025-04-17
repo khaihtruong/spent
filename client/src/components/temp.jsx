@@ -1,12 +1,11 @@
-//import { fetchPostWithAuth, fetchDeleteWithAuth} from "../security/fetchWithAuth";
 import { useState, useEffect } from "react";
-import "../style/test.css";
+import "./App.css";
 import {
   fetchGetWithAuth,
   fetchPostWithAuth,
   fetchDeleteWithAuth,
   fetchPutWithAuth,
-} from "../security/fetchWithAuth";
+} from "./utils/fetchWithAuth";
 
 export default function App() {
   const [incomes, setIncomes] = useState([]);

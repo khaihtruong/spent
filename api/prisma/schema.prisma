@@ -13,20 +13,22 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Expense {
+model Income {
   id        Int      @id @default(autoincrement())
+  title     String
+  amount    Float
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  title     String   @db.VarChar(255)
   user      User     @relation(fields: [userId], references: [id])
   userId    Int
 }
 
-model Income {
+model Expense {
   id        Int      @id @default(autoincrement())
+  title     String
+  amount    Float
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  title     String   @db.VarChar(255)
   user      User     @relation(fields: [userId], references: [id])
   userId    Int
 }

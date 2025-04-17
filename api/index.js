@@ -101,121 +101,137 @@ app.get("/me", requireAuth, async (req, res) => {
   res.json(user);
 });
 
-// api for income
-app.get("/income", requireAuth, async (req, res) => {
+app.get("/budget", requireAuth, async (req, res) => {
   const userId = req.userId;
-  const income = await prisma.Income.findMany({ where: { userId } });
-  res.json(income);
+
+  try {
+    const incomes = await prisma.income.findMany({
+      where: { userId },
+      orderBy: { createdAt: "desc" },
+    });
+
+    const expenses = await prisma.expense.findMany({
+      where: { userId },
+      orderBy: { createdAt: "desc" },
+    });
+
+    res.json({ incomes, expenses });
+  } catch (error) {
+    console.error("Error loading budget data:", error);
+    res.status(500).json({ error: "Failed to load budget data" });
+  }
 });
 
 app.post("/income", requireAuth, async (req, res) => {
   const userId = req.userId;
+  const { title, amount } = req.body;
 
-  const { title } = req.body;
-
-  if (!title) {
-    res.status(400).send("title is required");
-  } else {
-    const newItem = await prisma.Income.create({
-      data: {
-        title,
-        userId,
-      },
-    });
-
-    res.status(201).json(newItem);
+  if (!title || typeof amount !== "number") {
+    return res.status(400).json({ error: "Missing title or amount" });
   }
+
+  const newIncome = await prisma.income.create({
+    data: { title, amount, userId },
+  });
+
+  res.status(201).json(newIncome);
+});
+
+app.post("/expenses", requireAuth, async (req, res) => {
+  const userId = req.userId;
+  const { title, amount } = req.body;
+
+  if (!title || typeof amount !== "number") {
+    return res.status(400).json({ error: "Missing title or amount" });
+  }
+
+  const newExpense = await prisma.expense.create({
+    data: { title, amount, userId },
+  });
+
+  res.status(201).json(newExpense);
 });
 
 app.delete("/income/:id", requireAuth, async (req, res) => {
-  const id = parseInt(req.params.id, 10);
-
-  if (isNaN(id)) {
-    return res.status(400).json({ error: "Invalid ID" });
-  }
+  const id = parseInt(req.params.id);
 
   try {
-    const deletedIncome = await prisma.income.delete({
-      where: { id },
-    });
-
-    res.status(200).json(deletedIncome);
+    const deleted = await prisma.income.delete({ where: { id } });
+    res.json(deleted);
   } catch (error) {
-    console.error("Error deleting expense:", error);
-
-    if (error.code === "P2025") {
-      return res.status(404).json({ error: "Expense not found" });
-    }
-
-    res.status(500).json({ error: "Internal server error" });
+    console.error("Error deleting income:", error);
+    res.status(404).json({ error: "Income not found" });
   }
 });
 
-app.post("/todos", requireAuth, async (req, res) => {
-  const userId = req.userId;
+app.delete("/expenses/:id", requireAuth, async (req, res) => {
+  const id = parseInt(req.params.id);
 
-  const { title } = req.body;
+  try {
+    const deleted = await prisma.expense.delete({ where: { id } });
+    res.json(deleted);
+  } catch (error) {
+    console.error("Error deleting expense:", error);
+    res.status(404).json({ error: "Expense not found" });
+  }
+});
 
-  if (!title) {
-    res.status(400).send("title is required");
-  } else {
-    const newItem = await prisma.Expense.create({
+// Update income item
+app.put("/income/:id", requireAuth, async (req, res) => {
+  const id = parseInt(req.params.id, 10);
+  const { title, amount } = req.body;
+
+  if (!title || isNaN(amount)) {
+    return res
+      .status(400)
+      .json({ error: "Title and valid amount are required." });
+  }
+
+  try {
+    const updatedIncome = await prisma.income.update({
+      where: { id },
       data: {
         title,
-        userId,
+        amount,
       },
     });
-
-    res.status(201).json(newItem);
-  }
-});
-
-app.delete("/todos/:id", requireAuth, async (req, res) => {
-  const id = parseInt(req.params.id, 10);
-
-  if (isNaN(id)) {
-    return res.status(400).json({ error: "Invalid ID" });
-  }
-
-  try {
-    const deletedExpense = await prisma.expense.delete({
-      where: { id },
-    });
-
-    res.status(200).json(deletedExpense);
+    res.status(200).json(updatedIncome);
   } catch (error) {
-    console.error("Error deleting expense:", error);
-
+    console.error("Error updating income:", error);
     if (error.code === "P2025") {
-      return res.status(404).json({ error: "Expense not found" });
+      return res.status(404).json({ error: "Income not found" });
     }
-
     res.status(500).json({ error: "Internal server error" });
   }
 });
 
-app.get("/todos/:id", requireAuth, async (req, res) => {
-  const id = req.params.id;
-  const expense = await prisma.Expense.findUnique({
-    where: {
-      id,
-    },
-  });
-  res.json(expense);
-});
+// Update expense item
+app.put("/expenses/:id", requireAuth, async (req, res) => {
+  const id = parseInt(req.params.id, 10);
+  const { title, amount } = req.body;
 
-app.put("/todos/:id", requireAuth, async (req, res) => {
-  const id = req.params.id;
-  const { title } = req.body;
-  const updatedExpense = await prisma.Expense.update({
-    where: {
-      id,
-    },
-    data: {
-      title,
-    },
-  });
-  res.json(updatedExpense);
+  if (!title || isNaN(amount)) {
+    return res
+      .status(400)
+      .json({ error: "Title and valid amount are required." });
+  }
+
+  try {
+    const updatedExpense = await prisma.expense.update({
+      where: { id },
+      data: {
+        title,
+        amount,
+      },
+    });
+    res.status(200).json(updatedExpense);
+  } catch (error) {
+    console.error("Error updating expense:", error);
+    if (error.code === "P2025") {
+      return res.status(404).json({ error: "Expense not found" });
+    }
+    res.status(500).json({ error: "Internal server error" });
+  }
 });
 
 app.listen(8000, () => {
