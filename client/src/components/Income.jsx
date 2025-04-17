@@ -1,14 +1,39 @@
 import "../style/todoList.css";
 
 import { useState } from "react";
-import useTodos from "../hooks/useTodos";
-import { fetchPostWithAuth } from "../security/fetchWithAuth";
+import useIncome from "../hooks/useIncome";
+import { fetchPostWithAuth, fetchDeleteWithAuth } from "../security/fetchWithAuth";
 
 export default function Income() {
   const [newItemText, setNewItemText] = useState("");
-  const [todosItems, setTodosItems] = useTodos();
+  const [incomeItems, setIncomeItems] = useIncome();
 
-  async function insertTodo(title) {
+  async function deleteIncome(id) {
+      const res = await fetchDeleteWithAuth(
+        `${process.env.REACT_APP_API_URL}/income/${id}`
+      );
+    
+      if (res.ok) {
+        const deletedIncome = await res.json();
+        return deletedIncome;
+      } else {
+        return null;
+      }
+    }
+  
+    const handleDeleteIncome = async (id) => {
+      const confirmDelete = window.confirm("Are you sure you want to delete this item?");
+      if (!confirmDelete) return;
+    
+      const deleted = await deleteIncome(id);
+      if (deleted) {
+        setIncomeItems((prevIncome) =>
+          prevIncome.filter((item) => item.id !== id)
+        );
+      }
+    };
+
+  async function insertIncome(title) {
     const data = await fetchPostWithAuth(
       `${process.env.REACT_APP_API_URL}/income`,
       {
@@ -17,8 +42,8 @@ export default function Income() {
     );
 
     if (data.ok) {
-      const todo = await data.json();
-      return todo;
+      const income = await data.json();
+      return income;
     } else {
       return null;
     }
@@ -29,9 +54,9 @@ export default function Income() {
 
     if (!newItemText) return;
 
-    const newTodo = await insertTodo(newItemText);
-    if (newTodo) {
-      setTodosItems([...todosItems, newTodo]);
+    const newIncome = await insertIncome(newItemText);
+    if (newIncome) {
+      setIncomeItems([...incomeItems, newIncome]);
       setNewItemText("");
     }
   };
@@ -57,7 +82,7 @@ export default function Income() {
       </form>
 
       <ul className="list">
-        {todosItems.map((item) => {
+        {incomeItems.map((item) => {
           return (
             <li key={item.id} className="todo-item">
               <input
@@ -67,8 +92,7 @@ export default function Income() {
                 checked={item.completed}
               />
               <span className="itemName">{item.title}</span>
-              <button aria-label={`Remove ${item.title}`} value={item.id} 
-              onClick={(e) => {console.log('here2')}}>
+              <button aria-label={`Remove ${item.title}`} value={item.id} onClick={(e) => {handleDeleteIncome(item.id)}}>
                 X
               </button>
             </li>

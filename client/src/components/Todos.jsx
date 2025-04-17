@@ -21,6 +21,18 @@ export default function Todos() {
     }
   }
 
+  const handleDelete = async (id) => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this item?");
+    if (!confirmDelete) return;
+  
+    const deleted = await deleteTodo(id);
+    if (deleted) {
+      setTodosItems((prevTodos) =>
+        prevTodos.filter((item) => item.id !== id)
+      );
+    }
+  };
+
   async function insertTodo(title) {
     const data = await fetchPostWithAuth(
       `${process.env.REACT_APP_API_URL}/todos`,
@@ -80,7 +92,7 @@ export default function Todos() {
                 checked={item.completed}
               />
               <span className="itemName">{item.title}</span>
-              <button aria-label={`Remove ${item.title}`} value={item.id} onClick={(e) => {deleteTodo(item.id)}}>
+              <button aria-label={`Remove ${item.title}`} value={item.id} onClick={(e) => {handleDelete(item.id)}}>
                 X
               </button>
             </li>

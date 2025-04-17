@@ -128,19 +128,27 @@ app.post("/income", requireAuth, async (req, res) => {
 });
 
 app.delete("/income/:id", requireAuth, async (req, res) => {
-  const id = req.params.id;
-  const deletedIncome = await prisma.income.delete({
-    where: {
-      id,
-    },
-  });
-  res.json(deletedIncome);
-});
+  const id = parseInt(req.params.id, 10);
 
-app.get("/todos", requireAuth, async (req, res) => {
-  const userId = req.userId;
-  const expense = await prisma.Expense.findMany({ where: { userId } });
-  res.json(expense);
+  if (isNaN(id)) {
+    return res.status(400).json({ error: "Invalid ID" });
+  }
+
+  try {
+    const deletedIncome = await prisma.income.delete({
+      where: { id },
+    });
+
+    res.status(200).json(deletedIncome);
+  } catch (error) {
+    console.error("Error deleting expense:", error);
+
+    if (error.code === "P2025") {
+      return res.status(404).json({ error: "Expense not found" });
+    }
+
+    res.status(500).json({ error: "Internal server error" });
+  }
 });
 
 app.post("/todos", requireAuth, async (req, res) => {

@@ -10,6 +10,7 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import NotFound from "./components/NotFound";
 import Home from "./components/Home";
+import Exchange from "./components/Exchange"
 import { AuthProvider } from "./security/AuthContext";
 import RequireAuth from "./security/RequireAuth";
 import "./style/normalize.css";
@@ -36,6 +37,7 @@ root.render(
         > 
           <Route path="profile" element= {<Profile />}/>
           <Route path="todos" element={<><Todos /><Income /></>} />
+          <Route path="exchange" element= {<Exchange />}/>
           <Route path="todos/:todoId" element={<TodoDetail />} />
         </Route>
         <Route path="*" element={<NotFound />} />
