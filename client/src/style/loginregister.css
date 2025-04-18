@@ -1,0 +1,108 @@
+@import url('https://fonts.googleapis.com/css2?family=Andika+New+Basic&display=swap');
+
+:root {
+  --green: #43aa8b;
+  --red: #ef476f;
+  --bg-dark: #121212;
+  --bg-light: #1e1e1e;
+  --text-light: #e0e0e0;
+  --card-dark: #1c1c1c;
+  --border-dark: #333;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Andika New Basic', sans-serif;
+  background-color: var(--bg-dark);
+  color: var(--text-light);
+}
+
+.register__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 4rem;
+}
+
+.register__container h1 {
+  margin-bottom: 2rem;
+  color: var(--green);
+}
+
+.register__form,
+.login-form {
+  background-color: var(--card-dark);
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  width: 90%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.register__form div,
+.login-form div {
+  margin-bottom: 1.5rem;
+}
+
+.register__form label,
+.login-form label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  color: var(--text-light);
+}
+
+.register__form input[type="email"],
+.register__form input[type="password"],
+.register__form input[type="text"],
+.login-form input[type="email"],
+.login-form input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid var(--border-dark);
+  font-size: 16px;
+  background-color: var(--bg-light);
+  color: var(--text-light);
+  outline: none;
+}
+
+.register__form input[type="submit"],
+.login-form input[type="submit"] {
+  width: 100%;
+  padding: 10px;
+  background-color: var(--green);
+  color: var(--text-light);
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.register__form input[type="submit"]:hover,
+.login-form input[type="submit"]:hover {
+  background-color: #2e8569;
+}
+
+.login-form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+  background-color: var(--bg-dark);
+  color: var(--text-light);
+}
+
+.login-form input::placeholder {
+  color: #a0a0a0;
+}

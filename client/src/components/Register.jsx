@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useAuthUser } from "../security/AuthContext";
 import { useNavigate } from "react-router-dom";
+import '../style/loginregister.css';
 
 export default function Register() {
   const [email, setEmail] = useState("");
@@ -16,9 +17,9 @@ export default function Register() {
   };
 
   return (
-    <div>
+    <div className="register__container">
       <h1>Register User</h1>
-      <form onSubmit={handleSubmit}>
+      <form className="register__form" onSubmit={handleSubmit}>
         <div>
           <label htmlFor="email">Email</label>
           <input

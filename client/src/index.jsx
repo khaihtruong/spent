@@ -4,7 +4,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import AppLayout from "./components/AppLayout";
 import Todos from "./components/Todos";
 import Income from "./components/Income"
-import TodoDetail from "./components/TodoDetail";
 import Profile from "./components/Profile";
 import Login from "./components/Login";
 import Register from "./components/Register";
@@ -42,7 +41,6 @@ root.render(
           <Route path="todos" element={<><Todos /><Income /></>} />
           <Route path="test" element= {<Test />}/>
           <Route path="exchange" element= {<Exchange />}/>
-          <Route path="todos/:todoId" element={<TodoDetail />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>

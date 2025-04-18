@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useAuthUser } from "../security/AuthContext";
 import { useNavigate } from "react-router-dom";
+import '../style/loginregister.css';
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -11,12 +12,12 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     await login(email, password);
-    navigate("/app");
+    navigate("/app/dashboard");
   };
 
   return (
-    <div className = 'home'>
-      <form onSubmit={handleSubmit}>
+    <div className="login-form-container">
+      <form onSubmit={handleSubmit} className="login-form">
         <input
           type="email"
           value={email}
