@@ -25,6 +25,7 @@ export default function App() {
         setExpenses(data.expenses || []);
       } catch (err) {
         console.error("Failed to load budget data:", err);
+        alert("Failed to load budget data.");
       }
     }
     loadData();
@@ -54,6 +55,9 @@ export default function App() {
       }
       setDescription("");
       setAmount("");
+      alert("Item added successfully.");
+    } else {
+      alert("Failed to add item.");
     }
   };
 
@@ -74,6 +78,9 @@ export default function App() {
       } else {
         setExpenses(expenses.filter((item) => item.id !== id));
       }
+      alert("Item deleted successfully.");
+    } else {
+      alert("Failed to delete item.");
     }
   };
 
@@ -83,8 +90,13 @@ export default function App() {
     setAmount(item.amount);
   };
 
-  const handleUpdate = async () => {
+  const handleUpdate = async (type) => {
     if (!editing) return;
+
+    if (editing.type !== type) {
+      alert(`You're editing a ${editing.type}. Please click the correct "Update ${editing.type}" button.`);
+      return;
+    }
 
     const url = `${process.env.REACT_APP_API_URL}/${editing.type}/${editing.id}`;
     const updatedItem = {
@@ -104,6 +116,9 @@ export default function App() {
       setDescription("");
       setAmount("");
       setEditing(null);
+      alert("Item updated successfully.");
+    } else {
+      alert("Failed to update item.");
     }
   };
 
@@ -155,10 +170,11 @@ export default function App() {
       </div>
 
       <div className="buttons__area">
-        <button id="add__income" onClick={() => editing ? handleUpdate() : handleAddItem("income")}>
-          {editing && editing.type === "income" ? "Update Income" : "Add Income"}
-        </button>
-        <button id="add__expense" onClick={() => editing ? handleUpdate() : handleAddItem("expense")}>
+        <button id="add__income" onClick={() => (editing ? handleUpdate("income") : handleAddItem("income"))}>
+            {editing && editing.type === "income" ? "Update Income" : "Add Income"}
+            </button>
+
+        <button id="add__expense" onClick={() => (editing ? handleUpdate("expense") : handleAddItem("expense"))}>
           {editing && editing.type === "expense" ? "Update Expense" : "Add Expense"}
         </button>
       </div>

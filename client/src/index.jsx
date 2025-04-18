@@ -11,6 +11,7 @@ import Register from "./components/Register";
 import NotFound from "./components/NotFound";
 import Home from "./components/Home";
 import Test from "./components/Test";
+import Dashboard from "./components/Dashboard"
 import Exchange from "./components/Exchange"
 import { AuthProvider } from "./security/AuthContext";
 import RequireAuth from "./security/RequireAuth";
@@ -36,6 +37,7 @@ root.render(
             </RequireAuth>
           }
         > 
+          <Route path="dashboard" element= {<Dashboard />}/>
           <Route path="profile" element= {<Profile />}/>
           <Route path="todos" element={<><Todos /><Income /></>} />
           <Route path="test" element= {<Test />}/>

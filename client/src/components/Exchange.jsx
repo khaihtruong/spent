@@ -63,7 +63,7 @@ export default function Exchange() {
   }
 
   return (
-    <div>
+    <div className = 'home'>
       <h1>Currency Converter</h1>
       <CurrencyInput
         onAmountChange={handleAmount1Change}
