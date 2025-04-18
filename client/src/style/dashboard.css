@@ -1,0 +1,46 @@
+.chart-page {
+  background-color: #121212;
+  color: #ffffff;
+  min-height: 100vh;
+  padding: 2rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.chart-header h1 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.chart-container {
+  background-color: #1e1e1e;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.recharts-tooltip-label {
+  color: #ffffff;
+}
+
+.recharts-default-tooltip {
+  background-color: #2a2a2a !important;
+  border: 1px solid #444 !important;
+  border-radius: 8px !important;
+}
+
+.recharts-legend-wrapper {
+  color: #ffffff !important;
+}
+
+.recharts-cartesian-axis-tick-value {
+  fill: #cccccc;
+  font-size: 0.8rem;
+}

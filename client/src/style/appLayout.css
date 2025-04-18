@@ -1,27 +1,38 @@
 .app {
   margin: 5px;
+  background-color: #121212;
+  color: #e0e0e0;
 }
 
 .title {
-  font-size: 12px;
-  border: 1px solid rgb(0, 255, 179);
+  font-size: 14px;
   text-align: center;
+  border: 1px solid #43aa8b;
+  padding: 6px 10px;
+  border-radius: 8px;
+  background-color: #1e1e1e;
+  color: #e0e0e0;
 }
 
 .header {
   width: 100%;
-  border: 1px solid orange;
-
   display: flex;
   align-items: center;
   justify-content: space-around;
-  margin: 5px 0;
+  margin: 10px 0;
+  padding: 10px;
+  background-color: #1e1e1e;
+  border: 1px solid #ff9800;
+  border-radius: 10px;
 }
 
 .content {
   width: 100%;
-  border: 1px solid lightskyblue;
-  margin-top: 5px;
+  margin-top: 10px;
+  padding: 10px;
+  background-color: #1c1c1c;
+  border: 1px solid #00bcd4;
+  border-radius: 10px;
 }
 
 .menu-list {
@@ -29,22 +40,46 @@
   display: flex;
   justify-content: space-evenly;
   padding: 0;
+  margin: 0;
 }
 
 .menu-list li {
-  margin-right: 8px;
+  margin-right: 12px;
+  color: #e0e0e0;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.menu-list li:hover {
+  color: #43aa8b;
+}
+
+.menu-list a:visited {
+  color: #e0e0e0; /* same as normal link color */
 }
 
 .exit-button {
-  background-color: lightcoral;
+  background-color: #ef476f;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.exit-button:hover {
+  background-color: #c43055;
 }
 
 .loading {
   display: flex;
   align-items: center;
-  justify-content: space-around;
-  background-color: lightcoral;
-  color: aliceblue;
+  justify-content: center;
+  background-color: #ef476f;
+  color: #ffffff;
   height: 100%;
   font-size: 36px;
+  border-radius: 8px;
 }

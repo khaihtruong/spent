@@ -1,161 +1,201 @@
 @import url('https://fonts.googleapis.com/css2?family=Andika+New+Basic&display=swap');
 
-*{
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-:root{
-    --green: #43aa8b;
-    --red: #bc4749;
+:root {
+  --green: #43aa8b;
+  --red: #ef476f;
+  --bg-dark: #121212;
+  --bg-light: #1e1e1e;
+  --text-color: #e0e0e0;
+  --card-color: #1c1c1c;
 }
 
-body{
-    background-color: #edf6f9;
-    font-family: 'Andika New Basic', sans-serif;
-    color: #2f3e46;
+body {
+  background-color: var(--bg-dark);
+  font-family: 'Andika New Basic', sans-serif;
+  color: var(--text-color);
 }
 
-.container{
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding-top: 3rem;
+.container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 3rem;
 }
 
-.budget__numbers{
-    display: flex;
-    justify-content: space-between;
-    width: 70%;
-    max-width: 700px;
-    margin: 1rem 0 3rem;
+.budget__numbers {
+  display: flex;
+  justify-content: space-between;
+  width: 70%;
+  max-width: 700px;
+  margin: 1rem 0 3rem;
 }
 
-.number{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-color: white;
-    padding: 10px;
-    border-radius: 15px;
+.number {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--card-color);
+  padding: 10px;
+  border-radius: 15px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
-.amount__container{
-    display: flex;
+.amount__container {
+  display: flex;
 }
 
-#amount__earned,#earned__symbol{color: var(--green);}
-#amount__spent,#spent__symbol{color: var(--red);}
-
-.input__area input{
-    border: none;
-    padding: 10px;
-    border-radius: 15px;
-    outline: none;
+#amount__earned, #earned__symbol {
+  color: var(--green);
 }
 
-.input__area #description{
-    width: 330px;
+#amount__spent, #spent__symbol {
+  color: var(--red);
 }
 
-.input__area #amount{
-    width: 70px;
-    text-align: center;
+.input__area input {
+  border: none;
+  padding: 10px;
+  border-radius: 15px;
+  outline: none;
+  background-color: var(--bg-light);
+  color: var(--text-color);
+  border: 1px solid #333;
+}
+
+.input__area #description {
+  width: 330px;
+}
+
+.input__area #amount {
+  width: 100px;
+  text-align: center;
 }
 
 /* remove arrows from number input */
 .input__area input::-webkit-outer-spin-button,
-.input__area input::-webkit-inner-spin-button{
-    -webkit-appearance: none;
+.input__area input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
 }
 
-.buttons__area{
-    margin: 10px 0 3rem;
+.buttons__area {
+  margin: 10px 0 3rem;
 }
 
 .buttons__area #add__income,
-.buttons__area #add__expense{
-    border: none;
-    padding: 10px 20px;
-    color: white;
-    border-radius: 15px;
-    outline: none;
-    cursor: pointer;
+.buttons__area #add__expense {
+  border: none;
+  padding: 10px 20px;
+  color: white;
+  border-radius: 15px;
+  outline: none;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
 }
 
-#add__income{background-color: var(--green);}
-#add__expense{background-color: var(--red);}
-
-.items__container{
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    width: 70%;
-    max-width: 700px;
+#add__income {
+  background-color: var(--green);
 }
 
-#income__container h2{color: var(--green);}
-#expenses__container h2{color: var(--red);}
-
-.items__container .container{
-    width: 49%;
-    border-radius: 15px;
+#add__income:hover {
+  background-color: #2e8569;
 }
 
-.container .item{
-    width: 100%;
-    background-color: white;
-    border-radius: 15px;
-    margin: 5px 0;
-    display: flex;
-    justify-content: space-between;
-    padding: 5px 40px 5px 30px;
-    position: relative;
+#add__expense {
+  background-color: var(--red);
+}
+
+#add__expense:hover {
+  background-color: #c43055;
+}
+
+.items__container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 70%;
+  max-width: 700px;
+}
+
+#income__container h2 {
+  color: var(--green);
+}
+
+#expenses__container h2 {
+  color: var(--red);
+}
+
+.items__container .container {
+  width: 49%;
+  border-radius: 15px;
+}
+
+.container .item {
+  width: 100%;
+  background-color: var(--card-color);
+  border-radius: 15px;
+  margin: 5px 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 40px 5px 30px;
+  position: relative;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.3);
 }
 
 .item__income,
-.item__expense{
-    display: flex;
+.item__expense {
+  display: flex;
 }
 
-.income span, .income p{color: var(--green);}
-.expense span, .expense p{color: var(--red);}
+.income span, .income p {
+  color: var(--green);
+}
 
-.item .far{
-    position: absolute;
-    top: 0;
-    right: 0;
-    height: 100%;
-    width: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    background-color: var(--red);
-    border-top-right-radius: 15px;
-    border-bottom-right-radius: 15px;
-    cursor: pointer;
+.expense span, .expense p {
+  color: var(--red);
+}
+
+.item .far {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  background-color: var(--red);
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
+  cursor: pointer;
+  transform: translateX(30px);
+  opacity: 0;
+}
+
+.item:hover .far {
+  animation: showDelete;
+  animation-duration: 0.5s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes showDelete {
+  0% {
     transform: translateX(30px);
     opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
 
-.item:hover .far{
-    animation: showDelete;
-    animation-duration: 0.5s;
-    animation-fill-mode: forwards;
-}
-
-@keyframes showDelete{
-    0%{
-        transform: translateX(30px);
-        opacity: 0;
-    }
-    100%{
-        transform: translateX(0);
-        opacity: 1;
-    }
-}

@@ -1,0 +1,42 @@
+/* currencyInput.css */
+
+.group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #2a2a2e;
+  padding: 20px;
+  margin: 10px 0;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(67, 170, 139, 0.15);
+  width: 100%;
+  max-width: 500px;
+}
+
+.group input {
+  padding: 10px;
+  font-size: 1.1rem;
+  width: 150px;
+  background-color: #1f1f22;
+  border: none;
+  border-radius: 8px;
+  color: #e0e0e0;
+  margin-right: 10px;
+  outline: none;
+}
+
+.group select {
+  padding: 10px;
+  font-size: 1.1rem;
+  background-color: #1f1f22;
+  color: #e0e0e0;
+  border: none;
+  border-radius: 8px;
+  outline: none;
+}
+
+.group input:focus,
+.group select:focus {
+  outline: 2px solid #43aa8b;
+  transition: outline 0.2s ease-in-out;
+}
