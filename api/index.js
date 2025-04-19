@@ -137,7 +137,7 @@ app.post("/income", requireAuth, async (req, res) => {
   res.status(201).json(newIncome);
 });
 
-app.post("/expenses", requireAuth, async (req, res) => {
+app.post("/expense", requireAuth, async (req, res) => {
   const userId = req.userId;
   const { title, amount } = req.body;
 
@@ -164,7 +164,7 @@ app.delete("/income/:id", requireAuth, async (req, res) => {
   }
 });
 
-app.delete("/expenses/:id", requireAuth, async (req, res) => {
+app.delete("/expense/:id", requireAuth, async (req, res) => {
   const id = parseInt(req.params.id);
 
   try {
@@ -206,7 +206,7 @@ app.put("/income/:id", requireAuth, async (req, res) => {
 });
 
 // Update expense item
-app.put("/expenses/:id", requireAuth, async (req, res) => {
+app.put("/expense/:id", requireAuth, async (req, res) => {
   const id = parseInt(req.params.id, 10);
   const { title, amount } = req.body;
 

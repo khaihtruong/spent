@@ -42,7 +42,7 @@ export default function App() {
     const url =
       type === "income"
         ? `${process.env.REACT_APP_API_URL}/income`
-        : `${process.env.REACT_APP_API_URL}/expenses`;
+        : `${process.env.REACT_APP_API_URL}/expense`;
 
     const response = await fetchPostWithAuth(url, newItem);
 
@@ -68,7 +68,7 @@ export default function App() {
     const url =
       type === "income"
         ? `${process.env.REACT_APP_API_URL}/income/${id}`
-        : `${process.env.REACT_APP_API_URL}/expenses/${id}`;
+        : `${process.env.REACT_APP_API_URL}/expense/${id}`;
 
     const response = await fetchDeleteWithAuth(url);
 
