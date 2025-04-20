@@ -22,7 +22,7 @@ export default function AppLayout() {
               <Link to="/app/profile">Profile</Link>
             </li>
             <li>
-              <Link to="/app/test">New Transactions</Link>
+              <Link to="/app/transaction">Transactions</Link>
             </li>
             <li>
               <Link to="/app/exchange">Exchange</Link>

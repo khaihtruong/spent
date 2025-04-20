@@ -1,6 +1,6 @@
 //import { fetchPostWithAuth, fetchDeleteWithAuth} from "../security/fetchWithAuth";
 import { useState, useEffect } from "react";
-import "../style/test.css";
+import "../style/transaction.css";
 import {
   fetchGetWithAuth,
   fetchPostWithAuth,
