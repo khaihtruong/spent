@@ -1,22 +1,25 @@
 import { useAuthUser } from "../security/AuthContext";
 import { useNavigate, Outlet, Link } from "react-router-dom";
+import logo from "../assets/logo.png";
 
-import "../style/home.css";
+import "../style/appLayout.css";
 
 export default function AppLayout() {
-  const { user, logout } = useAuthUser();
+  const { logout } = useAuthUser();
   const navigate = useNavigate();
 
   return (
     <div className="app">
       <div className="title">
-        <h1>Spent App</h1>
+        {}
+        <img src={logo} alt="Logo" className="logo" />
+        <h1>Spent</h1>
       </div>
       <div className="header">
         <nav className="menu">
           <ul className="menu-list">
             <li>
-            <Link to="/app/dashboard">Home</Link>
+              <Link to="/app/dashboard">Home</Link>
             </li>
             <li>
               <Link to="/app/profile">Profile</Link>
@@ -27,20 +30,19 @@ export default function AppLayout() {
             <li>
               <Link to="/app/exchange">Exchange</Link>
             </li>
-            <li>
-              <button
-                className="exit-button"
-                onClick={async () => {
-                  await logout();
-                  navigate("/");
-                }}
-              >
-                LogOut
-              </button>
-            </li>
           </ul>
         </nav>
-        <div>Welcome 👋 {user?.name} </div>
+
+        {/* LogOut button all the way to the right */}
+        <button
+          className="exit-button"
+          onClick={async () => {
+            await logout();
+            navigate("/");
+          }}
+        >
+          LogOut
+        </button>
       </div>
       <div className="content">
         <Outlet />

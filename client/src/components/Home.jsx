@@ -1,5 +1,6 @@
 import { useAuthUser } from "../security/AuthContext";
 import { useNavigate } from "react-router-dom";
+import logo from "../assets/logo.png";
 
 import "../style/home.css";
 
@@ -9,7 +10,10 @@ export default function Home() {
 
   return (
     <div className="home">
-      <h1>Spent App</h1>
+      <div>
+        <img src={logo} alt="Logo" className="logo" />
+        <h1>Spent</h1>
+      </div>
       <div>
         {!isAuthenticated ? (
           <button className="btn-primary" onClick={() => navigate("/login")}>

@@ -1,4 +1,3 @@
-//import { fetchPostWithAuth, fetchDeleteWithAuth} from "../security/fetchWithAuth";
 import { useState, useEffect } from "react";
 import "../style/transaction.css";
 import {
@@ -136,18 +135,18 @@ export default function App() {
             <span id="amount__earned">{totalEarned.toFixed(2)}</span>
           </div>
         </div>
-        <div id="available" className="number">
-          <small>Money Available</small>
-          <div className="amount__container">
-            <p>$</p>
-            <span id="amount__available">{available.toFixed(2)}</span>
-          </div>
-        </div>
         <div id="spent" className="number">
           <small>Money Spent</small>
           <div className="amount__container">
             <p id="spent__symbol">$</p>
             <span id="amount__spent">{totalSpent.toFixed(2)}</span>
+          </div>
+        </div>
+        <div id="available" className="number">
+          <small>Money Available</small>
+          <div className="amount__container">
+            <p>$</p>
+            <span id="amount__available">{available.toFixed(2)}</span>
           </div>
         </div>
       </div>
@@ -171,8 +170,8 @@ export default function App() {
 
       <div className="buttons__area">
         <button id="add__income" onClick={() => (editing ? handleUpdate("income") : handleAddItem("income"))}>
-            {editing && editing.type === "income" ? "Update Income" : "Add Income"}
-            </button>
+          {editing && editing.type === "income" ? "Update Income" : "Add Income"}
+        </button>
 
         <button id="add__expense" onClick={() => (editing ? handleUpdate("expense") : handleAddItem("expense"))}>
           {editing && editing.type === "expense" ? "Update Expense" : "Add Expense"}
@@ -189,11 +188,11 @@ export default function App() {
                 <p className="symbol">$</p>
                 <span className="income__amount">{item.amount?.toFixed(2)}</span>
               </div>
-              <button className="delete__btn" onClick={() => handleDelete("income", item.id)}>
-                ×
-              </button>
               <button className="edit__btn" onClick={() => handleEdit({ ...item, type: "income" })}>
                 ✎
+              </button>
+              <button className="delete__btn" onClick={() => handleDelete("income", item.id)}>
+                x
               </button>
             </div>
           ))}
@@ -208,11 +207,11 @@ export default function App() {
                 <p className="symbol">$</p>
                 <span className="expense__amount">{item.amount?.toFixed(2)}</span>
               </div>
-              <button className="delete__btn" onClick={() => handleDelete("expense", item.id)}>
-                ×
-              </button>
               <button className="edit__btn" onClick={() => handleEdit({ ...item, type: "expense" })}>
                 ✎
+              </button>
+              <button className="delete__btn" onClick={() => handleDelete("expense", item.id)}>
+                x
               </button>
             </div>
           ))}

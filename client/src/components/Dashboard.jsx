@@ -48,7 +48,7 @@ export default function Dashboard() {
         <h1>Income & Expense History</h1>
       </div>
       <div className="chart-container">
-        <ResponsiveContainer width="100%" height={400}>
+        <ResponsiveContainer width="100%" aspect = {2}>
           <LineChart data={chartData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
             <XAxis dataKey="date" />
             <YAxis />
@@ -57,7 +57,7 @@ export default function Dashboard() {
             <Line
               type="monotone"
               dataKey="income"
-              stroke="#00c853"
+              stroke="#43aa8b"
               strokeWidth={2}
               name="Income"
               dot={{ r: 3 }}
@@ -65,7 +65,7 @@ export default function Dashboard() {
             <Line
               type="monotone"
               dataKey="expense"
-              stroke="#e53935"
+              stroke="#ef476f"
               strokeWidth={2}
               name="Expense"
               dot={{ r: 3 }}

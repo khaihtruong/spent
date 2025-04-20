@@ -5,9 +5,10 @@ import { useState, useEffect } from "react";
 export default function Exchange() {
   const [amount1, setAmount1] = useState(1);
   const [amount2, setAmount2] = useState(1);
-  const [currency1, setCurrency1] = useState('USD');
-  const [currency2, setCurrency2] = useState('EUR');
+  const [currency1, setCurrency1] = useState('EUR');  // Default input currency set to EUR
+  const [currency2, setCurrency2] = useState('USD');  // Default output currency set to USD
   const [rates, setRates] = useState({});
+  const [copyMessage, setCopyMessage] = useState('');
 
   useEffect(() => {
     async function fetchRates() {
@@ -15,11 +16,9 @@ export default function Exchange() {
         const res = await fetch(
           'https://data.fixer.io/api/latest?access_key=7d018667759aa74bd388ceaeb2785c46&format=1'
         );
-
         if (!res.ok) {
           throw new Error(`HTTP error! status: ${res.status}`);
         }
-
         const data = await res.json();
         setRates(data.rates);
       } catch (error) {
@@ -62,8 +61,17 @@ export default function Exchange() {
     setCurrency2(currency2);
   }
 
+  function copyToClipboard(value) {
+    navigator.clipboard.writeText(value)
+      .then(() => {
+        setCopyMessage('Value copied to clipboard!');
+        setTimeout(() => setCopyMessage(''), 2000);
+      })
+      .catch((error) => console.error('Error copying value:', error));
+  }
+
   return (
-    <div className = 'home'>
+    <div className='exchange'>
       <h1>Currency Converter</h1>
       <CurrencyInput
         onAmountChange={handleAmount1Change}
@@ -79,6 +87,10 @@ export default function Exchange() {
         amount={amount2}
         currency={currency2}
       />
+      <div className="copy-section">
+        <button onClick={() => copyToClipboard(amount2)}>Copy Value</button>
+        {copyMessage && <span className="copy-message">{copyMessage}</span>}
+      </div>
     </div>
   );
 }

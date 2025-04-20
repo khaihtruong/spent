@@ -1,0 +1,86 @@
+.profile-page {
+  background-color: #121212;
+  color: #ffffff;
+  min-height: 100vh;
+  padding: 2rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.profile-header {
+  margin-bottom: 2rem;
+}
+
+.profile-header h2 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem;
+  color: #ffffff;
+}
+
+.profile-info {
+  background-color: #1e1e1e;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.profile-info p {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  color: #dddddd;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.profile-info .income {
+  color: #43aa8b;
+}
+
+.profile-info .expense {
+  color: #ef476f;
+}
+
+.profile-info .balance {
+  color: #00bcd4;
+}
+
+/* Tablet */
+@media (max-width: 768px) {
+  .profile-page {
+    padding: 1.5rem;
+  }
+
+  .profile-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .profile-info {
+    padding: 1.25rem;
+  }
+
+  .profile-info p {
+    font-size: 0.95rem;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .profile-page {
+    padding: 1rem;
+  }
+
+  .profile-header h2 {
+    font-size: 1.3rem;
+  }
+
+  .profile-info {
+    padding: 1rem;
+  }
+
+  .profile-info p {
+    font-size: 0.9rem;
+  }
+}
