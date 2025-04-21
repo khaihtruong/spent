@@ -11,8 +11,12 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await login(email, password);
-    navigate("/app/transaction");
+    try {
+      await login(email, password);
+      navigate("/app/transaction");
+    } catch (err) {
+      alert(err.message);
+    }
   };
 
   return (
@@ -34,7 +38,7 @@ function Login() {
         <br />
         <input type="submit" value="Login" />
       </form>
-      </div>
+    </div>
   );
 }
 

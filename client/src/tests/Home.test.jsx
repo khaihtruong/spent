@@ -13,88 +13,61 @@ jest.mock("../security/AuthContext");
 describe("Home Component", () => {
   const mockNavigate = jest.fn();
 
+  const renderHome = () =>
+    render(
+      <MemoryRouter>
+        <Home />
+      </MemoryRouter>
+    );
+
   beforeEach(() => {
     jest.clearAllMocks();
     require("react-router-dom").useNavigate.mockReturnValue(mockNavigate);
   });
 
-  test("renders login button when user is not authenticated", () => {
+  test("renders login and create account buttons when user is not authenticated", () => {
     useAuthUser.mockReturnValue({ isAuthenticated: false });
 
-    render(
-      <MemoryRouter>
-        <Home />
-      </MemoryRouter>
-    );
+    renderHome();
 
-    expect(screen.getByText("TODOs App")).toBeInTheDocument();
+    expect(screen.getByText("Spent")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /login/i })).toBeInTheDocument();
-    expect(
-      screen.getByRole("button", { name: /create account/i })
-    ).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /create account/i })).toBeInTheDocument();
   });
 
-  test("renders enter app button when user is authenticated", () => {
+  test("renders enter app and create account buttons when user is authenticated", () => {
     useAuthUser.mockReturnValue({ isAuthenticated: true });
 
-    render(
-      <MemoryRouter>
-        <Home />
-      </MemoryRouter>
-    );
+    renderHome();
 
-    expect(
-      screen.getByRole("button", { name: /enter app/i })
-    ).toBeInTheDocument();
-    expect(
-      screen.getByRole("button", { name: /create account/i })
-    ).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /enter app/i })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /create account/i })).toBeInTheDocument();
   });
 
   test("navigates to login page when login button is clicked", () => {
     useAuthUser.mockReturnValue({ isAuthenticated: false });
 
-    render(
-      <MemoryRouter>
-        <Home />
-      </MemoryRouter>
-    );
+    renderHome();
 
-    const loginButton = screen.getByRole("button", { name: /login/i });
-    fireEvent.click(loginButton);
-
+    fireEvent.click(screen.getByRole("button", { name: /login/i }));
     expect(mockNavigate).toHaveBeenCalledWith("/login");
   });
 
   test("navigates to app page when enter app button is clicked", () => {
     useAuthUser.mockReturnValue({ isAuthenticated: true });
 
-    render(
-      <MemoryRouter>
-        <Home />
-      </MemoryRouter>
-    );
+    renderHome();
 
-    const enterAppButton = screen.getByRole("button", { name: /enter app/i });
-    fireEvent.click(enterAppButton);
-
+    fireEvent.click(screen.getByRole("button", { name: /enter app/i }));
     expect(mockNavigate).toHaveBeenCalledWith("/app");
   });
 
   test("navigates to register page when create account button is clicked", () => {
     useAuthUser.mockReturnValue({ isAuthenticated: false });
 
-    render(
-      <MemoryRouter>
-        <Home />
-      </MemoryRouter>
-    );
+    renderHome();
 
-    const registerButton = screen.getByRole("button", {
-      name: /create account/i,
-    });
-    fireEvent.click(registerButton);
-
+    fireEvent.click(screen.getByRole("button", { name: /create account/i }));
     expect(mockNavigate).toHaveBeenCalledWith("/register");
   });
 });

@@ -5,12 +5,13 @@ function RequireAuth({ children }) {
   const { isAuthenticated, loading } = useAuthUser();
 
   if (loading) {
-    return <p>... loading</p>;
+    return <p>Loading...</p>;
   }
 
-  if (!loading && !isAuthenticated) {
-    return <Navigate to="/login" />;
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
   }
+
   return children;
 }
 

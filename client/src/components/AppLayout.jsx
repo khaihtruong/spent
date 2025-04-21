@@ -33,7 +33,7 @@ export default function AppLayout() {
           </ul>
         </nav>
 
-        {/* LogOut button all the way to the right */}
+        {}
         <button
           className="exit-button"
           onClick={async () => {

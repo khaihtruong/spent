@@ -1,9 +1,9 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useAuthUser } from "../security/AuthContext";
 import { useNavigate } from "react-router-dom";
 import '../style/loginregister.css';
 
-export default function Register() {
+function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
@@ -12,8 +12,12 @@ export default function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await register(email, password, name);
-    navigate("/app");
+    try {
+      await register(email, password, name);
+      navigate("/app");
+    } catch (err) {
+      alert(err.message);
+    }
   };
 
   return (
@@ -52,3 +56,5 @@ export default function Register() {
     </div>
   );
 }
+
+export default Register;

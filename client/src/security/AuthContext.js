@@ -6,6 +6,7 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState(null);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -15,8 +16,8 @@ export function AuthProvider({ children }) {
         });
 
         if (res.ok) {
-          setIsAuthenticated(true);
           const data = await res.json();
+          setIsAuthenticated(true);
           setUser(data);
         } else {
           setIsAuthenticated(false);
@@ -24,6 +25,9 @@ export function AuthProvider({ children }) {
         }
       } catch (error) {
         console.error("Error fetching user data:", error);
+        setError("Failed to fetch user data. Please try again later.");
+        setIsAuthenticated(false);
+        setUser(null);
       } finally {
         setLoading(false);
       }
@@ -33,20 +37,28 @@ export function AuthProvider({ children }) {
   }, []);
 
   const login = async (email, password) => {
-    const res = await fetch(`${process.env.REACT_APP_API_URL}/login`, {
-      method: "POST",
-      credentials: "include",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
-    });
+    try {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/login`, {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
 
-    if (res.ok) {
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.message || "Login failed, please try again!");
+      }
+
       const userData = await res.json();
       setIsAuthenticated(true);
       setUser(userData);
-    } else {
+      setError(null);
+    } catch (error) {
       setIsAuthenticated(false);
       setUser(null);
+      setError(error.message);
+      throw error;
     }
   };
 
@@ -56,29 +68,49 @@ export function AuthProvider({ children }) {
       credentials: "include",
     });
     setIsAuthenticated(false);
+    setUser(null);
+    setError(null);
   };
 
   const register = async (email, password, name) => {
-    const res = await fetch(`${process.env.REACT_APP_API_URL}/register`, {
-      method: "POST",
-      credentials: "include",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password, name }),
-    });
+    try {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/register`, {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password, name }),
+      });
 
-    if (res.ok) {
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(
+          errorData.message || "Registration failed, please try again!"
+        );
+      }
+
       const userData = await res.json();
       setIsAuthenticated(true);
       setUser(userData);
-    } else {
+      setError(null);
+    } catch (error) {
       setIsAuthenticated(false);
       setUser(null);
+      setError(error.message);
+      throw error;
     }
   };
 
   return (
     <AuthContext.Provider
-      value={{ isAuthenticated, loading, user, login, register, logout }}
+      value={{
+        isAuthenticated,
+        loading,
+        user,
+        login,
+        register,
+        logout,
+        error,
+      }}
     >
       {children}
     </AuthContext.Provider>
