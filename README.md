@@ -12,7 +12,7 @@ Demo link - spent-beta.vercel.app
 <img src="assets/profile.png" alt="Profile">
 
 `Transaction page`
-<img src="assets/transaction.png" alt="Transaction">
+<img src="assets/transasction.png" alt="Transaction">
 
 
 
