@@ -1,7 +1,6 @@
 # spent
 
-`Demo`
-spent-beta.vercel.app
+<a href="spent-beta.vercel.app">Demot</a>
 
 `Dashboard`
 <img src="assets/dashboard.png" alt="Dashboard">
