@@ -91,22 +91,33 @@ app.post("/register", async (req, res) => {
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
   try {
+    // Find the user by email
     const user = await prisma.user.findUnique({ where: { email } });
     if (!user) {
       return res.status(401).json({ error: "Invalid credentials" });
     }
 
+    // Check if the password is correct
     const validPassword = await bcrypt.compare(password, user.password);
     if (!validPassword) {
       return res.status(401).json({ error: "Invalid credentials" });
     }
 
+    // Create the payload for the JWT token
     const payload = { userId: user.id };
+
+    // Generate the JWT token
     const token = jwt.sign(payload, process.env.JWT_SECRET, {
       expiresIn: "15m",
     });
+
+    // Log the token to check if it's being created correctly
+    console.log("JWT Token Created:", token); // This will log the token to the console
+
+    // Set the JWT token as an HTTP-only cookie
     res.cookie("token", token, { httpOnly: true, maxAge: 15 * 60 * 1000 });
 
+    // Send the user data back in the response
     const userData = {
       id: user.id,
       email: user.email,
