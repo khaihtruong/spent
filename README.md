@@ -1,5 +1,8 @@
 # spent
 
+`Demo`
+spent-beta.vercel.app
+
 `Dashboard`
 <img src="assets/dashboard.png" alt="Dashboard">
 
