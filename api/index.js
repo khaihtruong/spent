@@ -43,49 +43,63 @@ app.get("/ping", (req, res) => {
 
 app.post("/register", async (req, res) => {
   const { email, password, name } = req.body;
-  const existingUser = await prisma.user.findUnique({ where: { email } });
-  if (existingUser) {
-    return res.status(400).json({ error: "User already exists" });
+  try {
+    const existingUser = await prisma.user.findUnique({ where: { email } });
+    if (existingUser) {
+      return res.status(400).json({ error: "User already exists" });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const newUser = await prisma.user.create({
+      data: { email, password: hashedPassword, name },
+      select: { id: true, email: true, name: true },
+    });
+
+    const payload = { userId: newUser.id };
+    const token = jwt.sign(payload, process.env.JWT_SECRET, {
+      expiresIn: "15m",
+    });
+    res.cookie("token", token, { httpOnly: true, maxAge: 15 * 60 * 1000 });
+
+    res.json(newUser);
+  } catch (error) {
+    console.error("Error during registration:", error);
+    res
+      .status(500)
+      .json({ error: "An error occurred while registering the user" });
   }
-
-  const hashedPassword = await bcrypt.hash(password, 10);
-  const newUser = await prisma.user.create({
-    data: { email, password: hashedPassword, name },
-    select: { id: true, email: true, name: true },
-  });
-
-  const payload = { userId: newUser.id };
-  const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "15m" });
-  res.cookie("token", token, { httpOnly: true, maxAge: 15 * 60 * 1000 });
-
-  res.json(newUser);
 });
 
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
-  const user = await prisma.user.findUnique({ where: { email } });
-  if (!user) {
-    return res.status(401).json({ error: "Invalid credentials" });
+  try {
+    const user = await prisma.user.findUnique({ where: { email } });
+    if (!user) {
+      return res.status(401).json({ error: "Invalid credentials" });
+    }
+
+    const validPassword = await bcrypt.compare(password, user.password);
+    if (!validPassword) {
+      return res.status(401).json({ error: "Invalid credentials" });
+    }
+
+    const payload = { userId: user.id };
+    const token = jwt.sign(payload, process.env.JWT_SECRET, {
+      expiresIn: "15m",
+    });
+    res.cookie("token", token, { httpOnly: true, maxAge: 15 * 60 * 1000 });
+
+    const userData = {
+      id: user.id,
+      email: user.email,
+      name: user.name,
+    };
+
+    res.json(userData);
+  } catch (error) {
+    console.error("Error during login:", error);
+    res.status(500).json({ error: "An error occurred while logging in" });
   }
-  // password: 123456
-  // user.password: $2b$10$naV1eAwirV13nyBYVS96W..52QzN8U/UQ7mmi/IEEVJDtCAdDmOl2
-  const validPassword = await bcrypt.compare(password, user.password);
-  if (!validPassword) {
-    return res.status(401).json({ error: "Invalid credentials" });
-  }
-
-  const payload = { userId: user.id };
-  const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "15m" });
-  res.cookie("token", token, { httpOnly: true, maxAge: 15 * 60 * 1000 });
-
-  // ensure that the password is not sent to the client
-  const userData = {
-    id: user.id,
-    email: user.email,
-    name: user.name,
-  };
-
-  res.json(userData);
 });
 
 app.post("/logout", async (req, res) => {
@@ -240,8 +254,3 @@ const PORT = parseInt(process.env.PORT) || 8080;
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}🎉 🚀`);
 });
-
-/** 
-app.listen(8000, () => {
-  console.log("Server running on http://localhost:8000 🎉 🚀");
-});*/
