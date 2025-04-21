@@ -35,24 +35,22 @@ app.use(cookieParser());
 const { PrismaClient } = pkg;
 const prisma = new PrismaClient();
 
-// Middleware to verify JWT token sent by the client
 function requireAuth(req, res, next) {
   const token = req.cookies.token;
+  console.log("Auth cookie received:", token);
   if (!token) {
     return res.status(401).json({ error: "Unauthorized" });
   }
   try {
     const payload = jwt.verify(token, process.env.JWT_SECRET);
-
-    // attaching the user id to the request object, this will make it available in the endpoints that use this middleware
     req.userId = payload.userId;
     next();
   } catch (err) {
+    console.error("JWT Verification Failed:", err);
     return res.status(401).json({ error: "Unauthorized" });
   }
 }
 
-// this is a public endpoint because it doesn't have the requireAuth middleware
 app.get("/ping", (req, res) => {
   res.send("pong");
 });
@@ -78,7 +76,15 @@ app.post("/register", async (req, res) => {
       expiresIn: "15m",
     });
 
-    res.cookie("token", token, { httpOnly: true, maxAge: 15 * 60 * 1000 });
+    console.log("JWT Token Created (register):", token);
+
+    res.cookie("token", token, {
+      httpOnly: true,
+      maxAge: 15 * 60 * 1000,
+      sameSite: "None",
+      secure: true,
+    });
+
     res.json(newUser);
   } catch (err) {
     console.error("Register error:", err);
@@ -91,33 +97,30 @@ app.post("/register", async (req, res) => {
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
   try {
-    // Find the user by email
     const user = await prisma.user.findUnique({ where: { email } });
     if (!user) {
       return res.status(401).json({ error: "Invalid credentials" });
     }
 
-    // Check if the password is correct
     const validPassword = await bcrypt.compare(password, user.password);
     if (!validPassword) {
       return res.status(401).json({ error: "Invalid credentials" });
     }
 
-    // Create the payload for the JWT token
     const payload = { userId: user.id };
-
-    // Generate the JWT token
     const token = jwt.sign(payload, process.env.JWT_SECRET, {
       expiresIn: "15m",
     });
 
-    // Log the token to check if it's being created correctly
-    console.log("JWT Token Created:", token); // This will log the token to the console
+    console.log("JWT Token Created (login):", token);
 
-    // Set the JWT token as an HTTP-only cookie
-    res.cookie("token", token, { httpOnly: true, maxAge: 15 * 60 * 1000 });
+    res.cookie("token", token, {
+      httpOnly: true,
+      maxAge: 15 * 60 * 1000,
+      sameSite: "None",
+      secure: true,
+    });
 
-    // Send the user data back in the response
     const userData = {
       id: user.id,
       email: user.email,
@@ -136,7 +139,6 @@ app.post("/logout", async (req, res) => {
   res.json({ message: "Logged out" });
 });
 
-// requireAuth middleware will validate the access token sent by the client and will return the user information within req.auth
 app.get("/me", requireAuth, async (req, res) => {
   const user = await prisma.user.findUnique({
     where: { id: req.userId },
@@ -220,7 +222,6 @@ app.delete("/expense/:id", requireAuth, async (req, res) => {
   }
 });
 
-// Update income item
 app.put("/income/:id", requireAuth, async (req, res) => {
   const id = parseInt(req.params.id, 10);
   const { title, amount } = req.body;
@@ -249,7 +250,6 @@ app.put("/income/:id", requireAuth, async (req, res) => {
   }
 });
 
-// Update expense item
 app.put("/expense/:id", requireAuth, async (req, res) => {
   const id = parseInt(req.params.id, 10);
   const { title, amount } = req.body;
@@ -278,7 +278,6 @@ app.put("/expense/:id", requireAuth, async (req, res) => {
   }
 });
 
-// vercel deploy
 const PORT = parseInt(process.env.PORT) || 8080;
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}🎉 🚀`);
