@@ -42,14 +42,16 @@ app.get("/ping", (req, res) => {
 });
 
 app.post("/register", async (req, res) => {
-  const { email, password, name } = req.body;
   try {
+    const { email, password, name } = req.body;
+
     const existingUser = await prisma.user.findUnique({ where: { email } });
     if (existingUser) {
       return res.status(400).json({ error: "User already exists" });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
+
     const newUser = await prisma.user.create({
       data: { email, password: hashedPassword, name },
       select: { id: true, email: true, name: true },
@@ -59,11 +61,11 @@ app.post("/register", async (req, res) => {
     const token = jwt.sign(payload, process.env.JWT_SECRET, {
       expiresIn: "15m",
     });
-    res.cookie("token", token, { httpOnly: true, maxAge: 15 * 60 * 1000 });
 
+    res.cookie("token", token, { httpOnly: true, maxAge: 15 * 60 * 1000 });
     res.json(newUser);
-  } catch (error) {
-    console.error("Error during registration:", error);
+  } catch (err) {
+    console.error("Register error:", err);
     res
       .status(500)
       .json({ error: "An error occurred while registering the user" });
