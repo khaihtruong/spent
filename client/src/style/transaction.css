@@ -222,7 +222,6 @@ body {
   border-color: #379474;
 }
 
-/* Ensure both buttons are in the same fixed position */
 .item .button-container {
   position: absolute;
   top: 50%;

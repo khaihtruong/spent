@@ -1,5 +1,3 @@
-// This function is used to fetch data from the server with the credentials option set to include.
-
 export async function fetchWithAuth(url, options = {}) {
   try {
     const res = await fetch(url, { ...options, credentials: "include" });

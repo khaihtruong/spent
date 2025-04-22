@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 export default function Exchange() {
   const [amount1, setAmount1] = useState(1);
   const [amount2, setAmount2] = useState(1);
-  const [currency1, setCurrency1] = useState('EUR');  // Default input currency set to EUR
+  const [currency1, setCurrency1] = useState('EUR'); 
   const [currency2, setCurrency2] = useState('USD');  // Default output currency set to USD
   const [rates, setRates] = useState({});
   const [copyMessage, setCopyMessage] = useState('');
