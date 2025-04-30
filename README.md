@@ -1,8 +1,12 @@
-# Description
+# Spent
 Spent is a personal finance tracking web application built using JavaScript, Prisma, HTML, CSS, PostgreSQL, and RESTful APIs. It allows users to manage their expenses and income by recording transactions, categorizing them, and viewing financial summaries. The app also comes with a built-in currency exchange utilizing fixer.io API.
 
-# Demo 
-Demo link - spent-beta.vercel.app
+## Deployed App
+[Link](spent-beta.vercel.app) - Deployed with Render and Vercel  
+
+## Preview
+[![Spent Demo](https://img.youtube.com/vi/3EKpcQyThPc/0.jpg)](https://youtu.be/3EKpcQyThPc)
+
 
 `Homepage`
 <img src="assets/homepage.png" alt="Homepage">
