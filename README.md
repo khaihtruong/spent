@@ -5,7 +5,7 @@ Spent is a personal finance tracking web application built using JavaScript, Pri
 [Link](spent-beta.vercel.app) - Deployed with Render and Vercel  
 
 ## Preview
-`Video`
+`Video walkthrough`  
 [![Spent Demo](https://img.youtube.com/vi/3EKpcQyThPc/0.jpg)](https://youtu.be/3EKpcQyThPc)
 
 
