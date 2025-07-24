@@ -8,12 +8,6 @@ import jwt from "jsonwebtoken";
 import cookieParser from "cookie-parser";
 import bcrypt from "bcrypt";
 
-const allowedOrigins = [
-  "http://localhost:3000",
-  "https://spent-beta.vercel.app",
-  "https://spent-bk8wb3w1y-khaihtruongs-projects.vercel.app",
-];
-
 const app = express();
 app.use(cors({ origin: "http://localhost:3000", credentials: true }));
 app.use(express.urlencoded({ extended: true }));
