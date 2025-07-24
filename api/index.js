@@ -15,18 +15,7 @@ const allowedOrigins = [
 ];
 
 const app = express();
-app.use(
-  cors({
-    origin: function (origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
-    credentials: true,
-  })
-);
+app.use(cors({ origin: "http://localhost:3000", credentials: true }));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(morgan("dev"));
@@ -278,7 +267,6 @@ app.put("/expense/:id", requireAuth, async (req, res) => {
   }
 });
 
-const PORT = parseInt(process.env.PORT) || 8080;
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}🎉 🚀`);
+app.listen(8000, () => {
+  console.log("Server running on http://localhost:8000 🎉 🚀");
 });
